@@ -1,4 +1,6 @@
-package com.kru.batfinder2;
+package com.kru.batfinder2.interfaces;
+
+import com.kru.batfinder2.models.Bat;
 
 import java.util.List;
 

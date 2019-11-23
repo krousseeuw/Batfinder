@@ -1,4 +1,4 @@
-package com.kru.batfinder2;
+package com.kru.batfinder2.adapters;
 
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -11,10 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.kru.batfinder2.R;
+import com.kru.batfinder2.interfaces.IOnItemClickListener;
+import com.kru.batfinder2.models.Bat;
 
 import java.util.List;
 
-public class BatListAdapter  extends RecyclerView.Adapter<BatListAdapter.ViewHolder> {
+public class BatListAdapter extends BaseListAdapter {
     private final List<Bat> mBats;
     private IOnItemClickListener mOnItemListener;
 
@@ -33,7 +36,6 @@ public class BatListAdapter  extends RecyclerView.Adapter<BatListAdapter.ViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.mBat = mBats.get(position);
         Uri theUri = Uri.parse(Uri.decode(mBats.get(position).getImage_url()));
         Glide.with(holder.mImageView.getContext())
                 .load(theUri)
@@ -45,31 +47,5 @@ public class BatListAdapter  extends RecyclerView.Adapter<BatListAdapter.ViewHol
     @Override
     public int getItemCount() {
         return mBats.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public final View mView;
-        public final ImageView mImageView;
-        public final TextView titleView;
-        public final TextView subtitleView;
-        public Bat mBat;
-        IOnItemClickListener onBatClickListener;
-
-        public ViewHolder(View view, IOnItemClickListener onBatClickListener) {
-            super(view);
-            mView = view;
-            mImageView = view.findViewById(R.id.icon_view);
-            titleView = view.findViewById(R.id.title_view);
-            subtitleView = view.findViewById(R.id.subtitle_view);
-
-            this.onBatClickListener = onBatClickListener;
-
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            onBatClickListener.onItemClick(getAdapterPosition());
-        }
     }
 }

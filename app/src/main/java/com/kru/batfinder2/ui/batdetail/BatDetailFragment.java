@@ -1,6 +1,5 @@
 package com.kru.batfinder2.ui.batdetail;
 
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -16,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.kru.batfinder2.Bat;
+import com.kru.batfinder2.models.Bat;
 import com.kru.batfinder2.R;
 import com.kru.batfinder2.ui.home.HomeViewModel;
 

@@ -1,4 +1,4 @@
-package com.kru.batfinder2;
+package com.kru.batfinder2.models;
 
 import com.google.gson.annotations.SerializedName;
 

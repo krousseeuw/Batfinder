@@ -1,4 +1,7 @@
-package com.kru.batfinder2;
+package com.kru.batfinder2.data;
+
+import com.kru.batfinder2.models.Bat;
+import com.kru.batfinder2.models.Sponsor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,10 +9,13 @@ import java.util.List;
 public class DataManager {
     private static DataManager dataManagerInstance = null;
     private List<Bat> mBats = new ArrayList<>();
+    private List<Sponsor> mSponsors = new ArrayList<>();
 
     public static DataManager getInstance() {
         if(dataManagerInstance == null) {
             dataManagerInstance = new DataManager();
+            dataManagerInstance.initializeMockSponsors();
+
         }
 
         return dataManagerInstance;
@@ -48,6 +54,12 @@ public class DataManager {
 
     private Object createMyReqSuccessListener() {
     }*/
+
+    private void initializeMockSponsors(){
+        mSponsors.add(new Sponsor("https://www.bats.org.uk/", "Bat Conservation Trust", "UK's Largest Bat Organisation", "http://dtsl.ehb.be/~kevin.rousseeuw/BatData/img/apple-touch-icon.png"));
+        mSponsors.add(new Sponsor("http://www.batcon.org/", "Bat Conservation International", "International Bat organisation", "http://dtsl.ehb.be/~kevin.rousseeuw/BatData/img/Bat_Conservation_International_logo.png"));
+        mSponsors.add(new Sponsor("https://www.merlintuttle.org/", "Merlin Tuttle's Bat Conservation", "US-Based organisation", "http://dtsl.ehb.be/~kevin.rousseeuw/BatData/img/Merlin+Tuttle_s+Bat+Conservation.jpg"));
+    }
 
     private void initializeMockBats(){
         mBats.add(new Bat(1,"Brown long-eared bat","Gewone grootoorvleermuis","Plecotus auritus",
@@ -88,5 +100,9 @@ public class DataManager {
     public List<Bat> getAllMockBats() {
         dataManagerInstance.initializeMockBats();
         return mBats;
+    }
+
+    public List<Sponsor> getSponsors() {
+        return mSponsors;
     }
 }
