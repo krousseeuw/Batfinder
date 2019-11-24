@@ -1,8 +1,12 @@
 package com.kru.batfinder2.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Bat {
+public class Bat implements Parcelable {
+
     @SerializedName("id")
     private int id;
 
@@ -101,7 +105,7 @@ public class Bat {
         return image_url;
     }
 
-    public String getBodyLengthToString(){
+    public String getBodyLengthToString() {
         return getMin_bodylength() + " to " + getMax_bodylength() + "MM";
     }
 
@@ -135,4 +139,50 @@ public class Bat {
         this.image_url = image_url;
         this.image_credit = image_credit;
     }
+
+    public Bat(Parcel source) {
+        id = source.readInt();
+        common_name_en = source.readString();
+        common_name_nl = source.readString();
+        scientific_name = source.readString();
+        min_bodylength = source.readInt();
+        max_bodylength = source.readInt();
+        description_en = source.readString();
+        description_nl = source.readString();
+        image_url = source.readString();
+        image_credit = source.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(common_name_en);
+        dest.writeString(common_name_nl);
+        dest.writeString(scientific_name);
+        dest.writeInt(min_bodylength);
+        dest.writeInt(max_bodylength);
+        dest.writeString(description_en);
+        dest.writeString(description_nl);
+        dest.writeString(image_url);
+        dest.writeString(image_credit);
+    }
+
+    public static final Creator<Bat> CREATOR =
+            new Creator<Bat>() {
+                @Override
+                public Bat createFromParcel(Parcel source) {
+                    return new Bat(source);
+                }
+
+                @Override
+                public Bat[] newArray(int size) {
+                    return new Bat[size];
+                }
+            };
+
 }
