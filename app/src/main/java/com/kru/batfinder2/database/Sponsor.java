@@ -22,11 +22,15 @@ public class Sponsor {
     @ColumnInfo(name = "logoUrl")
     private String mLogoUrl;
 
-    public Sponsor(String link, String name, String extraInfo, String logoUrl) {
+    @ColumnInfo(name = "languageCode")
+    private String mLanguageCode;
+
+    public Sponsor(String link, String name, String extraInfo, String logoUrl, String languageCode) {
         mLink = link;
         mName = name;
         mExtraInfo = extraInfo;
         mLogoUrl = logoUrl;
+        mLanguageCode = languageCode;
     }
 
     public int getId() { return mId; }

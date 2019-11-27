@@ -17,8 +17,6 @@ public interface ObservationDAO {
     LiveData<List<Observation>> getObservationsByBatId(int batId);
 
     //Add batch
-
-
-    //Update from database
-
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    void insert(Observation... observations);
 }
