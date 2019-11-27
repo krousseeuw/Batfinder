@@ -1,13 +1,13 @@
 package com.kru.batfinder2.models;
 
-public class Sponsor {
+public class SponsorDTO {
 
     private String link;
     private String name;
     private String extraInfo;
     private String logoUrl;
 
-    public Sponsor(String link, String name, String extraInfo, String logoUrl) {
+    public SponsorDTO(String link, String name, String extraInfo, String logoUrl) {
         this.link = link;
         this.name = name;
         this.extraInfo = extraInfo;

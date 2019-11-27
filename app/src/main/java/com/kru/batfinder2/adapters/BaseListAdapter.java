@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kru.batfinder2.R;
 import com.kru.batfinder2.interfaces.IOnItemClickListener;
-import com.kru.batfinder2.models.Bat;
 
 public abstract class BaseListAdapter extends RecyclerView.Adapter<BatListAdapter.ViewHolder> {
 

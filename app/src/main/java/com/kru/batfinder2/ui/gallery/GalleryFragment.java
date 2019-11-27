@@ -5,12 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,13 +51,13 @@ public class GalleryFragment extends Fragment implements IOnItemClickListener {
         mRecylerView.setHasFixedSize(true);
         mRecylerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mAdapter = new SponsorListAdapter(DataManager.getInstance().getSponsors(), this);
+        mAdapter = new SponsorListAdapter(DataManager.getInstance().getSponsorDTOS(), this);
         mRecylerView.setAdapter(mAdapter);
     }
 
     @Override
     public void onItemClick(int position) {
-        String link = DataManager.getInstance().getSponsors().get(position).getLink();
+        String link = DataManager.getInstance().getSponsorDTOS().get(position).getLink();
         mListener.onSponsorSelected(link);
     }
 

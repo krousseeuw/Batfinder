@@ -6,21 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.kru.batfinder2.R;
 import com.kru.batfinder2.interfaces.IOnItemClickListener;
-import com.kru.batfinder2.models.Sponsor;
+import com.kru.batfinder2.models.SponsorDTO;
 
 import java.util.List;
 
 public class SponsorListAdapter extends BaseListAdapter{
-    private final List<Sponsor> mSponsors;
+    private final List<SponsorDTO> mSponsorDTOS;
     private IOnItemClickListener mOnItemListener;
 
-    public SponsorListAdapter(List<Sponsor> sponsors, IOnItemClickListener onItemListener){
-        mSponsors = sponsors;
+    public SponsorListAdapter(List<SponsorDTO> sponsorDTOS, IOnItemClickListener onItemListener){
+        mSponsorDTOS = sponsorDTOS;
         mOnItemListener = onItemListener;
     }
 
@@ -34,16 +33,16 @@ public class SponsorListAdapter extends BaseListAdapter{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Uri theUri = Uri.parse(Uri.decode(mSponsors.get(position).getLogoUrl()));
+        Uri theUri = Uri.parse(Uri.decode(mSponsorDTOS.get(position).getLogoUrl()));
         Glide.with(holder.mImageView.getContext())
                 .load(theUri)
                 .into(holder.mImageView);
-        holder.titleView.setText(mSponsors.get(position).getName());
-        holder.subtitleView.setText(mSponsors.get(position).getExtraInfo());
+        holder.titleView.setText(mSponsorDTOS.get(position).getName());
+        holder.subtitleView.setText(mSponsorDTOS.get(position).getExtraInfo());
     }
 
     @Override
     public int getItemCount() {
-        return mSponsors.size();
+        return mSponsorDTOS.size();
     }
 }

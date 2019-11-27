@@ -1,14 +1,9 @@
 package com.kru.batfinder2.ui.home;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,21 +13,13 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kru.batfinder2.SynchronizationService;
-import com.kru.batfinder2.models.Bat;
-import com.kru.batfinder2.interfaces.BatFinderApi;
+import com.kru.batfinder2.models.BatDTO;
 import com.kru.batfinder2.adapters.BatListAdapter;
 import com.kru.batfinder2.data.DataManager;
 import com.kru.batfinder2.interfaces.IOnItemClickListener;
 import com.kru.batfinder2.R;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeFragment extends Fragment implements IOnItemClickListener {
 
@@ -57,16 +44,16 @@ public class HomeFragment extends Fragment implements IOnItemClickListener {
     }
 
     private void initializeDisplayContent(){
-        homeViewModel.getBatsList().observe(this, new Observer<List<Bat>>() {
+        homeViewModel.getBatsList().observe(this, new Observer<List<BatDTO>>() {
             @Override
-            public void onChanged(List<Bat> bats) {
-                loadRecyclerView(bats);
+            public void onChanged(List<BatDTO> batDTOS) {
+                loadRecyclerView(batDTOS);
             }
         });
     }
 
-    private void loadRecyclerView(List<Bat> bats){
-        mAdapter = new BatListAdapter(bats, this);
+    private void loadRecyclerView(List<BatDTO> batDTOS){
+        mAdapter = new BatListAdapter(batDTOS, this);
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }

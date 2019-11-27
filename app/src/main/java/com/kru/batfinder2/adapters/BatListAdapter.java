@@ -4,25 +4,22 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.kru.batfinder2.R;
 import com.kru.batfinder2.interfaces.IOnItemClickListener;
-import com.kru.batfinder2.models.Bat;
+import com.kru.batfinder2.models.BatDTO;
 
 import java.util.List;
 
 public class BatListAdapter extends BaseListAdapter {
-    private final List<Bat> mBats;
+    private final List<BatDTO> mBatDTOS;
     private IOnItemClickListener mOnItemListener;
 
-    public BatListAdapter(List<Bat> bats, IOnItemClickListener onItemListener){
-        mBats = bats;
+    public BatListAdapter(List<BatDTO> batDTOS, IOnItemClickListener onItemListener){
+        mBatDTOS = batDTOS;
         mOnItemListener = onItemListener;
     }
 
@@ -36,16 +33,16 @@ public class BatListAdapter extends BaseListAdapter {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Uri theUri = Uri.parse(Uri.decode(mBats.get(position).getImage_url()));
+        Uri theUri = Uri.parse(Uri.decode(mBatDTOS.get(position).getImage_url()));
         Glide.with(holder.mImageView.getContext())
                 .load(theUri)
                 .into(holder.mImageView);
-        holder.titleView.setText(mBats.get(position).getCommon_name_en());
-        holder.subtitleView.setText(mBats.get(position).getScientific_name());
+        holder.titleView.setText(mBatDTOS.get(position).getCommon_name_en());
+        holder.subtitleView.setText(mBatDTOS.get(position).getScientific_name());
     }
 
     @Override
     public int getItemCount() {
-        return mBats.size();
+        return mBatDTOS.size();
     }
 }

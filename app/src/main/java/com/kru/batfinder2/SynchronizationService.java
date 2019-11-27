@@ -3,14 +3,10 @@ package com.kru.batfinder2;
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.Context;
-import android.os.Bundle;
-import android.os.Parcelable;
-import android.widget.Toast;
 
 import com.kru.batfinder2.data.DataManager;
 import com.kru.batfinder2.interfaces.BatFinderApi;
-import com.kru.batfinder2.models.Bat;
-import com.kru.batfinder2.ui.home.HomeFragment;
+import com.kru.batfinder2.models.BatDTO;
 
 import java.util.List;
 
@@ -77,23 +73,23 @@ public class SynchronizationService extends IntentService {
 
         Retrofit retrofit = builder.build();
         BatFinderApi client = retrofit.create(BatFinderApi.class);
-        Call<List<Bat>> call = client.loadBats();
+        Call<List<BatDTO>> call = client.loadBats();
 
-        call.enqueue(new Callback<List<Bat>>() {
+        call.enqueue(new Callback<List<BatDTO>>() {
             @Override
-            public void onResponse(Call<List<Bat>> call, Response<List<Bat>> response) {
+            public void onResponse(Call<List<BatDTO>> call, Response<List<BatDTO>> response) {
                 onSuccessResponse(response.body());
                 DataManager.getInstance().updateBatList(response.body());
             }
 
             @Override
-            public void onFailure(Call<List<Bat>> call, Throwable t) {
+            public void onFailure(Call<List<BatDTO>> call, Throwable t) {
                 onErrorResponse();
             }
         });
     }
 
-    private void onSuccessResponse(List<Bat> list) {
+    private void onSuccessResponse(List<BatDTO> list) {
         Intent intent = new Intent();
         intent.setAction(BAT_INFO);
         intent.putExtra(BAT_LIST, true);

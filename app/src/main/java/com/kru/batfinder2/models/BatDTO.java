@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Bat implements Parcelable {
+public class BatDTO implements Parcelable {
 
     @SerializedName("id")
     private int id;
@@ -125,9 +125,9 @@ public class Bat implements Parcelable {
         this.image_credit = image_credit;
     }
 
-    public Bat(int id, String common_name_en, String common_name_nl, String scientific_name,
-               int min_bodylength, int max_bodylength, String description_en,
-               String description_nl, String image_url, String image_credit) {
+    public BatDTO(int id, String common_name_en, String common_name_nl, String scientific_name,
+                  int min_bodylength, int max_bodylength, String description_en,
+                  String description_nl, String image_url, String image_credit) {
         this.id = id;
         this.common_name_en = common_name_en;
         this.common_name_nl = common_name_nl;
@@ -140,7 +140,7 @@ public class Bat implements Parcelable {
         this.image_credit = image_credit;
     }
 
-    public Bat(Parcel source) {
+    public BatDTO(Parcel source) {
         id = source.readInt();
         common_name_en = source.readString();
         common_name_nl = source.readString();
@@ -172,16 +172,16 @@ public class Bat implements Parcelable {
         dest.writeString(image_credit);
     }
 
-    public static final Creator<Bat> CREATOR =
-            new Creator<Bat>() {
+    public static final Creator<BatDTO> CREATOR =
+            new Creator<BatDTO>() {
                 @Override
-                public Bat createFromParcel(Parcel source) {
-                    return new Bat(source);
+                public BatDTO createFromParcel(Parcel source) {
+                    return new BatDTO(source);
                 }
 
                 @Override
-                public Bat[] newArray(int size) {
-                    return new Bat[size];
+                public BatDTO[] newArray(int size) {
+                    return new BatDTO[size];
                 }
             };
 
