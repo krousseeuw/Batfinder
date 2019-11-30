@@ -17,8 +17,6 @@
             android:name=".SynchronizationService"
             android:exported="false"></service>
 
-        <activity android:name=".BatDetailActivity" />
-        <activity android:name=".BatDetail" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BatFinder</string>
+    <string name="bodyLengthString">%1$s tot %2$s mm.</string>
+    <string name="buttontext_record_observation">Observatie Toevoegen</string>
+    <string name="buttontext_view_observations">Bekijk Observaties</string>
+    <string name="menu_sponsors">Sponsers</string>
+    <string name="menu_home">Vleermuizen</string>
+    <string name="photoCreditString">Foto: © %1$s</string>
+    <string name="sponsor_blurb">Wil je meer leren over vleermuizen?</string>
+    <string name="action_settings">Instellingen</string>
+    <string name="nav_header_subtitle">door Kevin Rousseeuw</string>
+</resources>

@@ -1,10 +1,15 @@
 package com.kru.batfinder2.database;
 
+import android.content.Context;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.kru.batfinder2.R;
 import com.kru.batfinder2.models.BatDTO;
+
+import static android.provider.Settings.System.getString;
 
 @Entity(tableName = "bat_table")
 public class Bat {
@@ -156,13 +161,5 @@ public class Bat {
 
     public void setId(int id) {
         mId = id;
-    }
-
-    public String getBodyLengthToString() {
-        return getMinBodyLength() + " to " + getMaxBodyLength() + "MM";
-    }
-
-    public String getImageCreditString() {
-            return "Photo: " + "\u00A9 " + getImageAuthorName();
     }
 }

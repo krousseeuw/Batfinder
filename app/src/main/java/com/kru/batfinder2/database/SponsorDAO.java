@@ -15,4 +15,7 @@ public interface SponsorDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Sponsor sponsor);
+
+    @Query("SELECT * from sponsor_table WHERE languageCode = :language ORDER BY name ASC")
+    LiveData<List<Sponsor>> getAllSponsorsByLanguage(String language);
 }

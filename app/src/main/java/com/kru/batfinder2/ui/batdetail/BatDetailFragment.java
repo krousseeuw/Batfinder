@@ -1,5 +1,6 @@
 package com.kru.batfinder2.ui.batdetail;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -20,9 +21,9 @@ import com.kru.batfinder2.models.BatDTO;
 import com.kru.batfinder2.R;
 import com.kru.batfinder2.ui.home.HomeViewModel;
 
-public class BatDetailFragment extends Fragment {
-    public String language = "EN";
+import java.util.Locale;
 
+public class BatDetailFragment extends Fragment {
     private HomeViewModel mViewModel;
     private ImageView mImageView;
     private TextView mCommonNameView;
@@ -54,7 +55,7 @@ public class BatDetailFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this.getActivity()).get(HomeViewModel.class);
+        mViewModel = new ViewModelProvider(this.getActivity()).get(HomeViewModel.class);
         // TODO: Use the ViewModel
         mViewModel.getSelectedBat().observe(getViewLifecycleOwner(), this::displayBat);
     }
@@ -64,16 +65,16 @@ public class BatDetailFragment extends Fragment {
                 .load(bat.getImageUrl())
                 .into(mImageView);
 
-        if(language.equals("EN")) {
-            mCommonNameView.setText(bat.getCommonNameEn());
-            mDescription.setText(bat.getDescriptionEn());
-        } else if (language.equals("NL")){
+        if(Locale.getDefault().getLanguage().equals(getString(R.string.dutchLanguageCode))) {
             mCommonNameView.setText(bat.getCommonNameNl());
             mDescription.setText(bat.getDescriptionNl());
+        } else {
+            mCommonNameView.setText(bat.getCommonNameEn());
+            mDescription.setText(bat.getDescriptionEn());
         }
 
         mScientificNameView.setText(bat.getScientificName());
-        mBodyLengthView.setText(bat.getBodyLengthToString());
-        mPhotoCredit.setText(bat.getImageCreditString());
+        mBodyLengthView.setText(getString(R.string.bodyLengthString, Integer.toString(bat.getMinBodyLength()), Integer.toString(bat.getMaxBodyLength())));
+        mPhotoCredit.setText(getString(R.string.photoCreditString, bat.getImageAuthorName()));
     }
 }

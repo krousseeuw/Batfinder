@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,7 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.kru.batfinder2.R;
 import com.kru.batfinder2.adapters.SponsorListAdapter;
 import com.kru.batfinder2.data.DataManager;
+import com.kru.batfinder2.database.Sponsor;
 import com.kru.batfinder2.interfaces.IOnItemClickListener;
+
+import java.util.List;
 
 public class GalleryFragment extends Fragment implements IOnItemClickListener {
 
@@ -23,11 +28,12 @@ public class GalleryFragment extends Fragment implements IOnItemClickListener {
     private RecyclerView mRecylerView;
     private SponsorListAdapter mAdapter;
     private IOnSponsorLinkSelectedListener mListener;
+    private List<Sponsor> mSponsors;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        galleryViewModel =
-                ViewModelProviders.of(this).get(GalleryViewModel.class);
+        galleryViewModel = new
+                ViewModelProvider(this).get(GalleryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
 
         initializeRecyclerView(root);
@@ -46,18 +52,31 @@ public class GalleryFragment extends Fragment implements IOnItemClickListener {
     }
 
     private void initializeRecyclerView(View root) {
+        galleryViewModel.getSponsors().observe(getViewLifecycleOwner(), new Observer<List<Sponsor>>() {
+            @Override
+            public void onChanged(List<Sponsor> sponsors) {
+                loadRecylerView(sponsors);
+                mSponsors = sponsors;
+            }
+        });
+
+
         mRecylerView = root.findViewById(R.id.sponsors_recycler_view);
 
         mRecylerView.setHasFixedSize(true);
         mRecylerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mAdapter = new SponsorListAdapter(DataManager.getInstance().getSponsorDTOS(), this);
+    }
+
+    private void loadRecylerView(List<Sponsor> sponsors) {
+        mAdapter = new SponsorListAdapter(sponsors, this);
         mRecylerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onItemClick(int position) {
-        String link = DataManager.getInstance().getSponsorDTOS().get(position).getLink();
+        String link = mSponsors.get(position).getLink();
         mListener.onSponsorSelected(link);
     }
 

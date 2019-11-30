@@ -14,6 +14,7 @@ import com.kru.batfinder2.interfaces.IOnItemClickListener;
 import com.kru.batfinder2.models.BatDTO;
 
 import java.util.List;
+import java.util.Locale;
 
 public class BatListAdapter extends BaseListAdapter {
     private final List<Bat> mBatDTOS;
@@ -38,7 +39,12 @@ public class BatListAdapter extends BaseListAdapter {
         Glide.with(holder.mImageView.getContext())
                 .load(theUri)
                 .into(holder.mImageView);
-        holder.titleView.setText(mBatDTOS.get(position).getCommonNameEn());
+        if(Locale.getDefault().getLanguage().equals("nl")){
+            holder.titleView.setText(mBatDTOS.get(position).getCommonNameNl());
+        } else {
+            holder.titleView.setText(mBatDTOS.get(position).getCommonNameEn());
+        }
+
         holder.subtitleView.setText(mBatDTOS.get(position).getScientificName());
     }
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BatFinder</string>
+    <string name="bodyLengthString">%1$s to %2$s mm.</string>
+    <string name="buttontext_record_observation">Record Observation</string>
+    <string name="buttontext_view_observations">View Observations</string>
+    <string name="menu_sponsors">Sponsors</string>
+    <string name="menu_home">Bats</string>
+    <string name="photoCreditString">Photo: © %1$s</string>
+    <string name="sponsor_blurb">Want to learn more about bats?</string>
+    <string name="action_settings">Settings</string>
+    <string name="nav_header_subtitle">by Kevin Rousseeuw</string>
+</resources>

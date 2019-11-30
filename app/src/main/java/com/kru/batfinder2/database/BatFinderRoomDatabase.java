@@ -51,8 +51,8 @@ public abstract class BatFinderRoomDatabase extends RoomDatabase {
                 dao.insert(new Sponsor("https://www.bats.org.uk/", "BatDTO Conservation Trust", "UK's Largest BatDTO Organisation", "http://dtsl.ehb.be/~kevin.rousseeuw/BatData/img/apple-touch-icon.png", "EN"));
                 dao.insert(new Sponsor("http://www.batcon.org/", "BatDTO Conservation International", "International BatDTO organisation", "http://dtsl.ehb.be/~kevin.rousseeuw/BatData/img/Bat_Conservation_International_logo.png", "EN"));
                 dao.insert(new Sponsor("https://www.merlintuttle.org/", "Merlin Tuttle's BatDTO Conservation", "US-Based organisation", "http://dtsl.ehb.be/~kevin.rousseeuw/BatData/img/Merlin+Tuttle_s+Bat+Conservation.jpg", "EN"));
-                dao.insert(new Sponsor("https://www.natuurpunt.be/afdelingen/vleermuizenwerkgroep", "Vleermuizenwerkgroep", "Werkgroep voor vleermuizen van Natuurpunt", "http://dtsl.ehb.be/~kevin.rousseeuw/BatData/img/Merlin+Tuttle_s+Bat+Conservation.jpg", "NL"));
-                dao.insert(new Sponsor("https://www.zoogdiervereniging.nl/", "Zoogdierenvereniging", "Nederlandse zoogdieren groep, doet veel werk met vleermuizen", "http://dtsl.ehb.be/~kevin.rousseeuw/BatData/img/Merlin+Tuttle_s+Bat+Conservation.jpg", "NL"));
+                dao.insert(new Sponsor("https://www.natuurpunt.be/afdelingen/vleermuizenwerkgroep", "Vleermuizenwerkgroep", "Werkgroep voor vleermuizen van Natuurpunt", "http://dtsl.ehb.be/~kevin.rousseeuw/BatData/img/vleermuizenwerkgroep_negatief_contour.png", "NL"));
+                dao.insert(new Sponsor("https://www.zoogdiervereniging.nl/", "Zoogdierenvereniging", "Nederlandse zoogdieren groep, doet veel werk met vleermuizen", "http://dtsl.ehb.be/~kevin.rousseeuw/BatData/img/Zoogdiervereniging_1000x1000.jpg", "NL"));
             });
         }
     };

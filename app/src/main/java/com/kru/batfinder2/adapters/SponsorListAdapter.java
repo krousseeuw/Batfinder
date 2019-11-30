@@ -9,16 +9,17 @@ import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.kru.batfinder2.R;
+import com.kru.batfinder2.database.Sponsor;
 import com.kru.batfinder2.interfaces.IOnItemClickListener;
 import com.kru.batfinder2.models.SponsorDTO;
 
 import java.util.List;
 
 public class SponsorListAdapter extends BaseListAdapter{
-    private final List<SponsorDTO> mSponsorDTOS;
+    private final List<Sponsor> mSponsorDTOS;
     private IOnItemClickListener mOnItemListener;
 
-    public SponsorListAdapter(List<SponsorDTO> sponsorDTOS, IOnItemClickListener onItemListener){
+    public SponsorListAdapter(List<Sponsor> sponsorDTOS, IOnItemClickListener onItemListener){
         mSponsorDTOS = sponsorDTOS;
         mOnItemListener = onItemListener;
     }
