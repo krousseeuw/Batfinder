@@ -3,11 +3,12 @@ package com.kru.batfinder2.database;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "observation_table", foreignKeys = @ForeignKey(entity = Bat.class, parentColumns = "id", childColumns = "batId", onDelete = CASCADE))
+@Entity(tableName = "observation_table", foreignKeys = @ForeignKey(entity = Bat.class, parentColumns = "id", childColumns = "batId", onDelete = CASCADE), indices = {@Index("batId")})
 public class Observation {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -66,5 +67,9 @@ public class Observation {
 
     public void setLatitude(double latitude) {
         mLatitude = latitude;
+    }
+
+    public void setId(int id) {
+        mId = id;
     }
 }

@@ -40,7 +40,7 @@ public class SynchronizationService extends IntentService {
      *
      * @see IntentService
      */
-    public static void startActionFoo(Context context) {
+    public static void startActionGetBatsFromApi(Context context) {
         Intent intent = new Intent(context, SynchronizationService.class);
         intent.setAction(ACTION_SYNC_BATS);
         context.startService(intent);

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.kru.batfinder2.database.Bat;
 import com.kru.batfinder2.models.BatDTO;
 import com.kru.batfinder2.R;
 import com.kru.batfinder2.ui.home.HomeViewModel;
@@ -55,26 +56,24 @@ public class BatDetailFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this.getActivity()).get(HomeViewModel.class);
         // TODO: Use the ViewModel
-        mViewModel.getSelectedBatId().observe(this, item -> {
-            displayBat(mViewModel.getBatDetails(item));
-        });
+        mViewModel.getSelectedBat().observe(getViewLifecycleOwner(), this::displayBat);
     }
 
-    private void displayBat(BatDTO batDTO) {
+    private void displayBat(Bat bat) {
         Glide.with(this)
-                .load(batDTO.getImage_url())
+                .load(bat.getImageUrl())
                 .into(mImageView);
 
         if(language.equals("EN")) {
-            mCommonNameView.setText(batDTO.getCommon_name_en());
-            mDescription.setText(batDTO.getDescription_en());
+            mCommonNameView.setText(bat.getCommonNameEn());
+            mDescription.setText(bat.getDescriptionEn());
         } else if (language.equals("NL")){
-            mCommonNameView.setText(batDTO.getCommon_name_nl());
-            mDescription.setText(batDTO.getDescription_nl());
+            mCommonNameView.setText(bat.getCommonNameNl());
+            mDescription.setText(bat.getDescriptionNl());
         }
 
-        mScientificNameView.setText(batDTO.getScientific_name());
-        mBodyLengthView.setText(batDTO.getBodyLengthToString());
-        mPhotoCredit.setText(batDTO.getImage_creditString());
+        mScientificNameView.setText(bat.getScientificName());
+        mBodyLengthView.setText(bat.getBodyLengthToString());
+        mPhotoCredit.setText(bat.getImageCreditString());
     }
 }

@@ -66,4 +66,16 @@ public class Sponsor {
     public void setLogoUrl(String logoUrl) {
         this.mLogoUrl = logoUrl;
     }
+
+    public String getLanguageCode() {
+        return mLanguageCode;
+    }
+
+    public void setLanguageCode(String languageCode) {
+        mLanguageCode = languageCode;
+    }
+
+    public void setId(int id) {
+        mId = id;
+    }
 }

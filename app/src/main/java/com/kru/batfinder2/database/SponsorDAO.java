@@ -11,7 +11,7 @@ import java.util.List;
 @Dao
 public interface SponsorDAO {
     @Query("SELECT * from sponsor_table ORDER BY name ASC")
-    List<Sponsor> getAllSponsors();
+    LiveData<List<Sponsor>> getAllSponsors();
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Sponsor sponsor);

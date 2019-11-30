@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 public class BatFinderRepository {
-    private final List<Sponsor> mAllSponsors;
+    private LiveData<List<Sponsor>> mAllSponsors;
     private BatDAO mBatDAO;
     private ObservationDAO mObservationDAO;
     private SponsorDAO mSponsorDAO;
@@ -25,4 +25,14 @@ public class BatFinderRepository {
     public LiveData<List<Bat>> getAllBats() {
         return mAllBats;
     }
+
+    public void insertBats(List<Bat> bats){
+        BatFinderRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mBatDAO.insert(bats.toArray(new Bat[0]));
+        });
+    }
+
+    public LiveData<List<Sponsor>> getAllSponsors() { return mAllSponsors;}
+
+    //public boolean batTableInitialized(){ return mBatDAO.getBatCount() > 0;}
 }

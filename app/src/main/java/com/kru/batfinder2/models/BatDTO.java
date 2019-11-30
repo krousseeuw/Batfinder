@@ -105,20 +105,12 @@ public class BatDTO implements Parcelable {
         return image_url;
     }
 
-    public String getBodyLengthToString() {
-        return getMin_bodylength() + " to " + getMax_bodylength() + "MM";
-    }
-
     public void setImage_url(String image_url) {
         this.image_url = image_url;
     }
 
     public String getImage_credit() {
         return image_credit;
-    }
-
-    public String getImage_creditString() {
-        return "Photo: " + "\u00A9 " + image_credit;
     }
 
     public void setImage_credit(String image_credit) {

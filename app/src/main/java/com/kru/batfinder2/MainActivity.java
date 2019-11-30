@@ -7,23 +7,14 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.view.View;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
-import com.kru.batfinder2.ui.batdetail.BatDetailFragment;
 import com.kru.batfinder2.ui.gallery.GalleryFragment;
-import com.kru.batfinder2.ui.home.HomeFragment;
 import com.kru.batfinder2.ui.home.HomeViewModel;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -37,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements GalleryFragment.I
 
     private AppBarConfiguration mAppBarConfiguration;
     private BatListReceiver mBatListReceiver;
+    private HomeViewModel mHomeViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +48,10 @@ public class MainActivity extends AppCompatActivity implements GalleryFragment.I
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        mHomeViewModel = new ViewModelProvider(MainActivity.this).get(HomeViewModel.class);
+
         registerBatListReceiver();
-        startBatSynchService();
     }
 
     @Override
@@ -87,10 +81,6 @@ public class MainActivity extends AppCompatActivity implements GalleryFragment.I
         startActivity(i);
     }
 
-    public void startBatSynchService(){
-        SynchronizationService.startActionFoo(this.getBaseContext());
-    }
-
     private void registerBatListReceiver() {
         mBatListReceiver = new BatListReceiver();
         IntentFilter intentFilter = new IntentFilter();
@@ -105,8 +95,7 @@ public class MainActivity extends AppCompatActivity implements GalleryFragment.I
         public void onReceive(Context context, Intent intent) {
             boolean success = intent.getBooleanExtra(SynchronizationService.BAT_LIST, false);
             if (success) {
-                HomeViewModel model = ViewModelProviders.of(MainActivity.this).get(HomeViewModel.class);
-                model.refreshBatList();
+                mHomeViewModel.refreshBatList();
             }
         }
     }

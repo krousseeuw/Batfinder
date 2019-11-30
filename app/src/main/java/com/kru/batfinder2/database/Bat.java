@@ -1,8 +1,12 @@
 package com.kru.batfinder2.database;
 
 import androidx.room.ColumnInfo;
+import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.kru.batfinder2.models.BatDTO;
+
+@Entity(tableName = "bat_table")
 public class Bat {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -51,6 +55,19 @@ public class Bat {
         mDescriptionNl = descriptionNl;
         mImageUrl = imageUrl;
         mImageAuthorName = imageAuthorName;
+    }
+
+    public Bat(BatDTO batDto) {
+        mApiId = batDto.getId();
+        mCommonNameEn = batDto.getCommon_name_en();
+        mCommonNameNl = batDto.getCommon_name_nl();
+        mScientificName = batDto.getScientific_name();
+        mDescriptionEn = batDto.getDescription_en();
+        mDescriptionNl = batDto.getDescription_nl();
+        mMinBodyLength = batDto.getMin_bodylength();
+        mMaxBodyLength = batDto.getMax_bodylength();
+        mImageAuthorName = batDto.getImage_credit();
+        mImageUrl = batDto.getImage_url();
     }
 
     public int getId() {
@@ -135,5 +152,17 @@ public class Bat {
 
     public void setImageAuthorName(String imageAuthorName) {
         mImageAuthorName = imageAuthorName;
+    }
+
+    public void setId(int id) {
+        mId = id;
+    }
+
+    public String getBodyLengthToString() {
+        return getMinBodyLength() + " to " + getMaxBodyLength() + "MM";
+    }
+
+    public String getImageCreditString() {
+            return "Photo: " + "\u00A9 " + getImageAuthorName();
     }
 }
