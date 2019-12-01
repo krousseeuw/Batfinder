@@ -86,7 +86,6 @@ public class SynchronizationService extends IntentService {
             @Override
             public void onResponse(Call<List<BatDTO>> call, Response<List<BatDTO>> response) {
                 onSuccessResponse(response.body());
-                DataManager.getInstance().updateBatList(response.body());
             }
 
             @Override

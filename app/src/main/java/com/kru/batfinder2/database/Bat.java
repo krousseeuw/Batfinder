@@ -44,10 +44,10 @@ public class Bat {
     @ColumnInfo(name = "imageAuthorName")
     private String mImageAuthorName;
 
-    public Bat(int apiId, String commonNameEn, String commonNameNl, String scientificName,
+    public Bat(int id, String commonNameEn, String commonNameNl, String scientificName,
                int minBodyLength, int maxBodyLength, String descriptionEn, String descriptionNl,
                String imageUrl, String imageAuthorName) {
-        mId = apiId;
+        mId = id;
         mCommonNameEn = commonNameEn;
         mCommonNameNl = commonNameNl;
         mScientificName = scientificName;

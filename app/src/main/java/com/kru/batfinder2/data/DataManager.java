@@ -9,7 +9,6 @@ import java.util.List;
 public class DataManager {
     private static DataManager dataManagerInstance = null;
     private List<BatDTO> mBatDTOS = new ArrayList<>();
-    private List<SponsorDTO> mSponsorDTOS = new ArrayList<>();
 
     public static DataManager getInstance() {
         if(dataManagerInstance == null) {
@@ -24,6 +23,6 @@ public class DataManager {
     }
 
     public void updateBatList(List<BatDTO> batDTOS){
-        mBatDTOS.addAll(batDTOS);
+        mBatDTOS = batDTOS;
     }
    }

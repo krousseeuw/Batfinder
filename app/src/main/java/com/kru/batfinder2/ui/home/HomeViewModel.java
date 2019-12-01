@@ -44,10 +44,9 @@ public class HomeViewModel extends AndroidViewModel {
 
     public void refreshBatList(){
         List<Bat> batsToUpdate = new ArrayList<>();
+        List<BatDTO> batdtos = mDataManager.getAllBats();
 
-        boolean noBatsInDb = mBats == null || Objects.requireNonNull(mBats.getValue()).isEmpty();
-
-        for (BatDTO batDto: mDataManager.getAllBats()){
+        for (BatDTO batDto: batdtos){
             batsToUpdate.add(new Bat(batDto));
         }
 
