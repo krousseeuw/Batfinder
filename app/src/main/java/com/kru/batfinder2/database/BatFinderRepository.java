@@ -30,6 +30,7 @@ public class BatFinderRepository {
 
     public void insertBats(List<Bat> bats){
         BatFinderRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mBatDAO.deleteAll();
             mBatDAO.insert(bats.toArray(new Bat[0]));
         });
     }

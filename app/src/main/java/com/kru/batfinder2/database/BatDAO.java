@@ -20,4 +20,7 @@ public interface BatDAO {
 
     @Query("SELECT count(*) from bat_table")
     int getBatCount();
+
+    @Query("DELETE from bat_table")
+    void deleteAll();
 }

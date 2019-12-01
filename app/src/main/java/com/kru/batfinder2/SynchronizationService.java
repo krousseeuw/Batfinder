@@ -8,8 +8,12 @@ import com.kru.batfinder2.data.DataManager;
 import com.kru.batfinder2.interfaces.BatFinderApi;
 import com.kru.batfinder2.models.BatDTO;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -68,7 +72,10 @@ public class SynchronizationService extends IntentService {
      * parameters.
      */
     private void handleActionSyncBats() {
+        OkHttpClient httpClient = getClient();
+
         Retrofit.Builder builder = new Retrofit.Builder().baseUrl(this.getString(R.string.apiurl))
+                .client(httpClient)
                 .addConverterFactory(GsonConverterFactory.create());
 
         Retrofit retrofit = builder.build();
@@ -106,12 +113,30 @@ public class SynchronizationService extends IntentService {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-
-
     private void onErrorResponse(){
         Intent intent = new Intent();
         intent.setAction(BAT_INFO);
         intent.putExtra(BAT_LIST, false);
         sendBroadcast(intent);
+    }
+
+    private OkHttpClient getClient(){
+        OkHttpClient client = new OkHttpClient();
+        try {
+            TLSSocketFactory tlsSocketFactory=new TLSSocketFactory();
+            if (tlsSocketFactory.getTrustManager()!=null) {
+                client = new OkHttpClient.Builder()
+                        .sslSocketFactory(tlsSocketFactory, tlsSocketFactory.getTrustManager())
+                        .build();
+            }
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+
+        return client;
     }
 }

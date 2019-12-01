@@ -13,12 +13,9 @@ import static android.provider.Settings.System.getString;
 
 @Entity(tableName = "bat_table")
 public class Bat {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "id")
     private int mId;
-
-    @ColumnInfo(name = "apiId")
-    private int mApiId;
 
     @ColumnInfo(name = "commonNameEn")
     private String mCommonNameEn;
@@ -50,7 +47,7 @@ public class Bat {
     public Bat(int apiId, String commonNameEn, String commonNameNl, String scientificName,
                int minBodyLength, int maxBodyLength, String descriptionEn, String descriptionNl,
                String imageUrl, String imageAuthorName) {
-        mApiId = apiId;
+        mId = apiId;
         mCommonNameEn = commonNameEn;
         mCommonNameNl = commonNameNl;
         mScientificName = scientificName;
@@ -63,7 +60,7 @@ public class Bat {
     }
 
     public Bat(BatDTO batDto) {
-        mApiId = batDto.getId();
+        mId = batDto.getId();
         mCommonNameEn = batDto.getCommon_name_en();
         mCommonNameNl = batDto.getCommon_name_nl();
         mScientificName = batDto.getScientific_name();
@@ -77,14 +74,6 @@ public class Bat {
 
     public int getId() {
         return mId;
-    }
-
-    public int getApiId() {
-        return mApiId;
-    }
-
-    public void setApiId(int apiId) {
-        mApiId = apiId;
     }
 
     public String getCommonNameEn() {
