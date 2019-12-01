@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,6 +74,7 @@ public class BatDetailFragment extends Fragment {
             mDescription.setText(bat.getDescriptionEn());
         }
 
+        mDescription.setMovementMethod(new ScrollingMovementMethod());
         mScientificNameView.setText(bat.getScientificName());
         mBodyLengthView.setText(getString(R.string.bodyLengthString, Integer.toString(bat.getMinBodyLength()), Integer.toString(bat.getMaxBodyLength())));
         mPhotoCredit.setText(getString(R.string.photoCreditString, bat.getImageAuthorName()));
