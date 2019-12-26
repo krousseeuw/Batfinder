@@ -6,6 +6,8 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import com.kru.batfinder2.models.ObservationDTO;
+
 import static androidx.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "observation_table", foreignKeys = @ForeignKey(entity = Bat.class, parentColumns = "id", childColumns = "batId", onDelete = CASCADE), indices = {@Index("batId")})
@@ -13,9 +15,6 @@ public class Observation {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int mId;
-
-    @ColumnInfo(name = "apiId")
-    private int mApiId;
 
     @ColumnInfo(name = "batId")
     private int mBatId;
@@ -26,23 +25,22 @@ public class Observation {
     @ColumnInfo(name = "latitude")
     private double mLatitude;
 
-    public Observation(int apiId, int batId, double longitude, double latitude) {
-        mApiId = apiId;
+    public Observation(int id, int batId, double longitude, double latitude) {
+        mId = id;
         mBatId = batId;
         mLongitude = longitude;
         mLatitude = latitude;
     }
 
+    public Observation(ObservationDTO observationDTO) {
+        mId = observationDTO.getId();
+        mBatId = observationDTO.getBatId();
+        mLatitude = observationDTO.getLatitude();
+        mLongitude = observationDTO.getLongitude();
+    }
+
     public int getId() {
         return mId;
-    }
-
-    public int getApiId() {
-        return mApiId;
-    }
-
-    public void setApiId(int apiId) {
-        mApiId = apiId;
     }
 
     public int getBatId() {

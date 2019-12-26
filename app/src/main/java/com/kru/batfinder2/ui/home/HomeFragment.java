@@ -53,12 +53,17 @@ public class HomeFragment extends Fragment implements IOnItemClickListener {
             public void onChanged(List<Bat> bats) {
                 if(bats.isEmpty()){
                     startBatSynchService();
+                    startObservationSynchService();
                 }
 
                 loadRecyclerView(bats);
                 mBats = bats;
             }
         });
+    }
+
+    private void startObservationSynchService() {
+        SynchronizationService.startActionGetObservationsFromApi(this.getContext());
     }
 
     private void loadRecyclerView(List<Bat> bats){

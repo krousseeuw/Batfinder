@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements GalleryFragment.I
     private AppBarConfiguration mAppBarConfiguration;
     private BatListReceiver mBatListReceiver;
     private HomeViewModel mHomeViewModel;
+    private ObservationListReceiver mObservationListReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements GalleryFragment.I
         mHomeViewModel = new ViewModelProvider(MainActivity.this).get(HomeViewModel.class);
 
         registerBatListReceiver();
+        registerObservationListReceiver();
     }
 
     @Override
@@ -89,13 +91,32 @@ public class MainActivity extends AppCompatActivity implements GalleryFragment.I
         registerReceiver(mBatListReceiver, intentFilter);
     }
 
+    private void registerObservationListReceiver() {
+        mObservationListReceiver = new ObservationListReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(SynchronizationService.OBSERVATION_INFO);
+
+        registerReceiver(mObservationListReceiver, intentFilter);
+    }
+
     private class  BatListReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            boolean success = intent.getBooleanExtra(SynchronizationService.BAT_LIST, false);
+            boolean success = intent.getBooleanExtra(SynchronizationService.BAT_RESULT, false);
             if (success) {
                 mHomeViewModel.refreshBatList();
+            }
+        }
+    }
+
+    private class ObservationListReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean success = intent.getBooleanExtra(SynchronizationService.OBSERVATION_RESULT, false);
+            if (success){
+                mHomeViewModel.refreshObservationList();
             }
         }
     }

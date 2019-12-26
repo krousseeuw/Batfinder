@@ -3,6 +3,7 @@ package com.kru.batfinder2.ui.batdetail;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,12 +14,14 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.kru.batfinder2.ObservationMapActivity;
 import com.kru.batfinder2.database.Bat;
 import com.kru.batfinder2.models.BatDTO;
 import com.kru.batfinder2.R;
@@ -34,6 +37,7 @@ public class BatDetailFragment extends Fragment {
     private TextView mBodyLengthView;
     private TextView mDescription;
     private TextView mPhotoCredit;
+    private int mBatId;
 
     public static BatDetailFragment newInstance() {
         return new BatDetailFragment();
@@ -65,6 +69,8 @@ public class BatDetailFragment extends Fragment {
     }
 
     private void displayBat(Bat bat) {
+        mBatId = bat.getId();
+
         Glide.with(this)
                 .load(bat.getImageUrl())
                 .into(mImageView);
@@ -86,5 +92,22 @@ public class BatDetailFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.bat_detail_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_view_observations:
+                Bundle bundle = new Bundle();
+                bundle.putInt(ObservationMapActivity.BAT_ID, mBatId);
+                Intent myIntent = new Intent(this.getContext(), ObservationMapActivity.class);
+                myIntent.putExtras(bundle);
+                startActivity(myIntent);
+                return true;
+            case R.id.action_record_observation:
+                return true;
+        }
+
+        return true;
     }
 }

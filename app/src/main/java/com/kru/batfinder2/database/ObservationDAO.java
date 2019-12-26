@@ -19,4 +19,7 @@ public interface ObservationDAO {
     //Add batch
     @Insert(onConflict = OnConflictStrategy.ABORT)
     void insert(Observation... observations);
+
+    @Query("DELETE from observation_table")
+    void deleteAll();
 }

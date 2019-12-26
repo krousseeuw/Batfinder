@@ -46,5 +46,16 @@ public class BatFinderRepository {
         return language;
     }
 
+    public void insertObservations(List<Observation> observationsToUpdate) {
+        BatFinderRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mObservationDAO.deleteAll();
+            mObservationDAO.insert(observationsToUpdate.toArray(new Observation[0]));
+        });
+    }
+
+    public LiveData<List<Observation>> getAllObservationsByBatId(int batid) {
+        return mObservationDAO.getObservationsByBatId(batid);
+    }
+
     //public boolean batTableInitialized(){ return mBatDAO.getBatCount() > 0;}
 }

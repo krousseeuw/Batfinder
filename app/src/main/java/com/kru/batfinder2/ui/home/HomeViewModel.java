@@ -9,8 +9,10 @@ import androidx.lifecycle.ViewModel;
 
 import com.kru.batfinder2.database.Bat;
 import com.kru.batfinder2.database.BatFinderRepository;
+import com.kru.batfinder2.database.Observation;
 import com.kru.batfinder2.models.BatDTO;
 import com.kru.batfinder2.data.DataManager;
+import com.kru.batfinder2.models.ObservationDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +53,17 @@ public class HomeViewModel extends AndroidViewModel {
         }
 
         mRepository.insertBats(batsToUpdate);
+    }
+
+    public void refreshObservationList() {
+        List<Observation> observationsToUpdate = new ArrayList<>();
+        List<ObservationDTO> observationDTOS = mDataManager.getAllObservations();
+
+        for (ObservationDTO observationDTO: observationDTOS){
+            observationsToUpdate.add(new Observation(observationDTO));
+        }
+
+        mRepository.insertObservations(observationsToUpdate);
     }
 
     public boolean batPresent() {
