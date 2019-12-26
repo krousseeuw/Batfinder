@@ -1,9 +1,14 @@
 package com.kru.batfinder2.ui.batdetail;
 
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,13 +26,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.kru.batfinder2.ObservationMapActivity;
 import com.kru.batfinder2.database.Bat;
+import com.kru.batfinder2.database.Observation;
 import com.kru.batfinder2.models.BatDTO;
 import com.kru.batfinder2.R;
 import com.kru.batfinder2.ui.home.HomeViewModel;
 
 import java.util.Locale;
+import java.util.concurrent.Executor;
 
 public class BatDetailFragment extends Fragment {
     private HomeViewModel mViewModel;
@@ -38,6 +48,7 @@ public class BatDetailFragment extends Fragment {
     private TextView mDescription;
     private TextView mPhotoCredit;
     private int mBatId;
+    private FusedLocationProviderClient mFusedLocationClient;
 
     public static BatDetailFragment newInstance() {
         return new BatDetailFragment();
@@ -49,6 +60,8 @@ public class BatDetailFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.bat_detail_fragment, container, false);
         setHasOptionsMenu(true);
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this.getActivity());
 
         mImageView = root.findViewById(R.id.image_bat_big);
         mCommonNameView = root.findViewById(R.id.text_bat_common_name);
@@ -98,16 +111,48 @@ public class BatDetailFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_view_observations:
-                Bundle bundle = new Bundle();
-                bundle.putInt(ObservationMapActivity.BAT_ID, mBatId);
-                Intent myIntent = new Intent(this.getContext(), ObservationMapActivity.class);
-                myIntent.putExtras(bundle);
-                startActivity(myIntent);
+                navigateToMapView();
                 return true;
             case R.id.action_record_observation:
-                return true;
+                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    askLocationPermission();
+                    return false;
+                }
+                else {
+                    getCurrentLocation();
+                    return true;
+                }
         }
 
-        return true;
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void askLocationPermission() {
+        ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                1000);
+
+    }
+
+    private void getCurrentLocation() {
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this.getActivity(), new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if(location != null){
+                            Observation newObservation = new Observation(mBatId, location.getLongitude(), location.getLatitude());
+                            mViewModel.insertObservation(newObservation);
+                            navigateToMapView();
+                        }
+                    }
+                });
+    }
+
+    private void navigateToMapView() {
+        Bundle bundle = new Bundle();
+        bundle.putInt(ObservationMapActivity.BAT_ID, mBatId);
+        Intent myIntent = new Intent(this.getContext(), ObservationMapActivity.class);
+        myIntent.putExtras(bundle);
+        startActivity(myIntent);
     }
 }

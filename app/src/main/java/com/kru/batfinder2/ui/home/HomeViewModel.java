@@ -55,6 +55,10 @@ public class HomeViewModel extends AndroidViewModel {
         mRepository.insertBats(batsToUpdate);
     }
 
+    public void insertObservation(Observation observation){
+        mRepository.insertObservation(observation);
+    }
+
     public void refreshObservationList() {
         List<Observation> observationsToUpdate = new ArrayList<>();
         List<ObservationDTO> observationDTOS = mDataManager.getAllObservations();

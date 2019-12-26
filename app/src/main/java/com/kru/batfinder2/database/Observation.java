@@ -25,8 +25,7 @@ public class Observation {
     @ColumnInfo(name = "latitude")
     private double mLatitude;
 
-    public Observation(int id, int batId, double longitude, double latitude) {
-        mId = id;
+    public Observation(int batId, double longitude, double latitude) {
         mBatId = batId;
         mLongitude = longitude;
         mLatitude = latitude;

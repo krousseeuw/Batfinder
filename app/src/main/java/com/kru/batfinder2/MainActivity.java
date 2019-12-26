@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -13,6 +14,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.kru.batfinder2.ui.gallery.GalleryFragment;
 import com.kru.batfinder2.ui.home.HomeViewModel;
@@ -29,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements GalleryFragment.I
     private AppBarConfiguration mAppBarConfiguration;
     private BatListReceiver mBatListReceiver;
     private HomeViewModel mHomeViewModel;
-    private ObservationListReceiver mObservationListReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements GalleryFragment.I
         mHomeViewModel = new ViewModelProvider(MainActivity.this).get(HomeViewModel.class);
 
         registerBatListReceiver();
-        registerObservationListReceiver();
     }
 
     @Override
@@ -87,36 +89,29 @@ public class MainActivity extends AppCompatActivity implements GalleryFragment.I
         mBatListReceiver = new BatListReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(SynchronizationService.BAT_INFO);
-
-        registerReceiver(mBatListReceiver, intentFilter);
-    }
-
-    private void registerObservationListReceiver() {
-        mObservationListReceiver = new ObservationListReceiver();
-        IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(SynchronizationService.OBSERVATION_INFO);
 
-        registerReceiver(mObservationListReceiver, intentFilter);
+        registerReceiver(mBatListReceiver, intentFilter);
     }
 
     private class  BatListReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            boolean success = intent.getBooleanExtra(SynchronizationService.BAT_RESULT, false);
-            if (success) {
-                mHomeViewModel.refreshBatList();
+            String action = intent.getAction();
+
+            if(action == SynchronizationService.BAT_INFO) {
+                boolean success = intent.getBooleanExtra(SynchronizationService.BAT_RESULT, false);
+                if (success) {
+                    mHomeViewModel.refreshBatList();
+                }
             }
-        }
-    }
 
-    private class ObservationListReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            boolean success = intent.getBooleanExtra(SynchronizationService.OBSERVATION_RESULT, false);
-            if (success){
-                mHomeViewModel.refreshObservationList();
+            if (action == SynchronizationService.OBSERVATION_INFO){
+                boolean success = intent.getBooleanExtra(SynchronizationService.OBSERVATION_RESULT, false);
+                if (success) {
+                    mHomeViewModel.refreshObservationList();
+                }
             }
         }
     }

@@ -57,5 +57,11 @@ public class BatFinderRepository {
         return mObservationDAO.getObservationsByBatId(batid);
     }
 
+    public void insertObservation(Observation observation) {
+        BatFinderRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mObservationDAO.insert(observation);
+        });
+    }
+
     //public boolean batTableInitialized(){ return mBatDAO.getBatCount() > 0;}
 }
